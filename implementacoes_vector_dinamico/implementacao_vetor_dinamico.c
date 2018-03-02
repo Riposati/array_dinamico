@@ -1,68 +1,86 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<string.h>
 
-int tamanhoBufferDesejado(){
-    int tamArrayInicial = 10;
-    return tamArrayInicial;
+char *vet;
+int tamArrayInicial = 10;
+int valor;
+
+void alocaMemoria(){
+
+    vet = (char *)malloc(tamArrayInicial * sizeof(char));
+    memset(vet,0,sizeof(char) * tamArrayInicial);
 }
 
-int *alocaMemoria(){
-    int tamArray = tamanhoBufferDesejado();
-    int *p;
-    int i;
-
-    p = (int *)malloc(tamArray * sizeof(int));
-
-    for(i=0;i<tamArray;i++){
-
-        p[i] = 0;
-    }
-
-    if(p==NULL){ /// se acabar a memória
-        printf("memoria ram insuficiente\n");
-        exit(1);
-    }
-    return p;
-}
-
-int *dobraBuffer(int *p,int tamArrayInicial){
+void dobraBuffer(){
 
     int i;
-    p = (int *)realloc(p,(tamArrayInicial*2) * sizeof(int));
+    char *t = vet;
 
-    if(p==NULL){
+    char u[tamArrayInicial];
 
-        printf("Memoria RAM insuficiente\n");
-        exit(1);
+    for(i=0;i<tamArrayInicial;i++){
+        u[i] = t[i];
     }
 
-    for(i=tamArrayInicial;i<tamArrayInicial*2;i++){
+    char *p = vet;
+    p = (char *)realloc(p,(tamArrayInicial*2) * sizeof(char));
 
-        p[i] = 0;
+    memset(p,0,sizeof (char) * (tamArrayInicial*2));
+
+    for(i=0;i<tamArrayInicial;i++){
+        p[i] = u[i];
     }
-
-    tamArrayInicial *=2;
-    return p;
+    tamArrayInicial = tamArrayInicial * 2;
+    vet = p;
 }
 
-void mostraBuffer(int *vet,int tamArrayInicial){
+void mostraBuffer(){
 
     int k;
-
     printf("valores alocados\n");
-    for(k=0;k<tamArrayInicial;k++){
-        if(vet[k]!=0)
-        printf("%d ",vet[k]);
+    for(k=0;k<strlen(vet);k++){
+
+        printf("%c",vet[k]);
     }
 }
 
-int necessarioDobrar(int *vet,int valor,int tamArrayInicial){
+void necessarioDobrar(){
 
-    if(valor==tamArrayInicial){ /// sabe que precisa alocar mais memoria
-        printf("\n\n*** dobrei o tamanho do vetor *** valor do valor neste momento = %d\n\n",valor);
-        vet = dobraBuffer(vet,tamArrayInicial);
-        tamArrayInicial*=2;
+    if(vet[tamArrayInicial-1]!=0){ /// sabe que precisa alocar mais memoria
+        printf("\n\n*** dobrei o tamanho do vetor *** valor nesse momento = %d\n\n",valor);
+        dobraBuffer();
     }
-
-    return tamArrayInicial;
 }
+
+int main()
+{
+    alocaMemoria(); /// vetor normal
+    char opcao;
+
+    printf("\nDigite e tecle enter\n<< diferente de zero - inserir valores >>\n<< 0 - sair >>\n");
+    scanf(" %c",&opcao);
+
+    getchar();
+
+    char *frase = "Teste String em C Gustavo Riposati estou aqui testando essa minha implementacao ";
+
+    while(opcao!='0'){
+
+        int i=0;
+        while(frase[i]!='\0'){
+            vet[valor] = frase[i];
+            valor++;
+            i++;
+
+            necessarioDobrar();
+        }
+
+        mostraBuffer();
+        printf("\nDigite e tecle enter\n<< diferente de zero - inserir valores >>\n<< 0 - sair >>\n");
+        scanf(" %c",&opcao);
+        getchar();
+    }
+        free(vet);
+        return 0;
+    }
