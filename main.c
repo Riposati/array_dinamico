@@ -3,13 +3,13 @@
 #include<string.h>
 
 char *vet;
-int tamArrayInicial = 10;
+int tamArray = 100;
 int valor;
 
 void alocaMemoria(){
 
-    vet = (char *)malloc(tamArrayInicial * sizeof(char));
-    memset(vet,0,sizeof(char) * tamArrayInicial);
+    vet = (char *)malloc(tamArray * sizeof(char));
+    memset(vet,0,sizeof(char) * tamArray);
 }
 
 void dobraBuffer(){
@@ -17,21 +17,21 @@ void dobraBuffer(){
     int i;
     char *t = vet;
 
-    char u[tamArrayInicial];
+    char u[tamArray];
 
-    for(i=0;i<tamArrayInicial;i++){
+    for(i=0;i<tamArray;i++){
         u[i] = t[i];
     }
 
     char *p = vet;
-    p = (char *)realloc(p,(tamArrayInicial*2) * sizeof(char));
+    p = (char *)realloc(p,(tamArray*2) * sizeof(char));
 
-    memset(p,0,sizeof (char) * (tamArrayInicial*2));
+    memset(p,0,sizeof (char) * (tamArray*2));
 
-    for(i=0;i<tamArrayInicial;i++){
+    for(i=0;i<tamArray;i++){
         p[i] = u[i];
     }
-    tamArrayInicial = tamArrayInicial * 2;
+    tamArray = tamArray * 2;
     vet = p;
 }
 
@@ -47,8 +47,9 @@ void mostraBuffer(){
 
 void necessarioDobrar(){
 
-    if(vet[tamArrayInicial-1]!=0){ /// sabe que precisa alocar mais memoria
-        printf("\n\n*** dobrei o tamanho do vetor *** valor nesse momento = %d\n\n",valor);
+    if(vet[tamArray-1]!=0){ /// sabe que precisa alocar mais memoria
+        printf("\n*** Tamanho atual do vetor = %d***\n",tamArray);
+        printf("\n*** Tamanho apos relocar memoria = %d***\n",tamArray*2);
         dobraBuffer();
     }
 }
@@ -63,7 +64,7 @@ int main()
 
     getchar();
 
-    char *frase = "Teste String em C Gustavo Riposati estou aqui testando essa minha implementacao ";
+    char *frase = "Game of Thrones "; // 16 chars, letras mais espaços
 
     while(opcao!='0'){
 
