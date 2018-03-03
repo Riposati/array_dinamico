@@ -6,10 +6,9 @@ char *vet;
 int tamArray = 100;
 int valor;
 
-void alocaMemoria(){
-
-    vet = (char *)malloc(tamArray * sizeof(char));
-    memset(vet,0,sizeof(char) * tamArray);
+void construtor(){
+    vet = (char *)malloc(tamArray * sizeof(char)); // tamanho inicial do vetor
+    memset(vet,0,sizeof(char) * tamArray); // inicializo todos valores com '0'
 }
 
 void dobraBuffer(){
@@ -19,20 +18,27 @@ void dobraBuffer(){
 
     char u[tamArray];
 
-    for(i=0;i<tamArray;i++){
+    for(i=0;i<tamArray;i++){ // faco a cópia dos valores do antigo vetor pra esse
         u[i] = t[i];
     }
 
     char *p = vet;
-    p = (char *)realloc(p,(tamArray*2) * sizeof(char));
+    p = (char *)realloc(p,(tamArray*2) * sizeof(char)); // aloco o novo vetor
 
-    memset(p,0,sizeof (char) * (tamArray*2));
+    if(p==NULL){
+        printf("nao consegui alocar mais falta de memoria disponivel!\n");
+        exit(1);
+    }
 
-    for(i=0;i<tamArray;i++){
+    memset(p,0,sizeof (char) * (tamArray*2)); // inicializo todos os valores pra 0
+
+    for(i=0;i<tamArray;i++){ // copio da nossa cópia pro novo vetor
         p[i] = u[i];
     }
-    tamArray = tamArray * 2;
-    vet = p;
+
+    tamArray = tamArray * 2; // dobro a variavel que assegura a necessidade de dobrar
+
+    vet = p; // nosso vetor antigo agora aponta para o novo
 }
 
 void mostraBuffer(){
@@ -47,7 +53,7 @@ void mostraBuffer(){
 
 void necessarioDobrar(){
 
-    if(vet[tamArray-1]!=0){ /// sabe que precisa alocar mais memoria
+    if(vet[tamArray-1]!=0){ // sabe que precisa alocar mais memoria
         printf("\n*** Tamanho atual do vetor = %d***\n",tamArray);
         printf("\n*** Tamanho apos realocar memoria = %d***\n",tamArray*2);
         dobraBuffer();
@@ -56,7 +62,7 @@ void necessarioDobrar(){
 
 int main()
 {
-    alocaMemoria(); /// vetor normal
+    construtor(); /// vetor normal
     char opcao;
 
     printf("\nDigite e tecle enter\n<< diferente de zero - inserir valores >>\n<< 0 - sair >>\n");
