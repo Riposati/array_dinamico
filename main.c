@@ -49,7 +49,7 @@ void necessarioDobrar(){
 
     if(vet[tamArray-1]!=0){ /// sabe que precisa alocar mais memoria
         printf("\n*** Tamanho atual do vetor = %d***\n",tamArray);
-        printf("\n*** Tamanho apos relocar memoria = %d***\n",tamArray*2);
+        printf("\n*** Tamanho apos realocar memoria = %d***\n",tamArray*2);
         dobraBuffer();
     }
 }
